@@ -1,0 +1,107 @@
+.MainViewContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.PanelOptions {
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  button {
+    background-color: rgba(0, 0, 0, 0.10);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+}
+
+.Option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 8px;
+
+  > * {
+    flex: 1;
+  }
+
+  label {
+    padding-left: 8px;
+  }
+
+  div {
+    display: flex;
+    height: 32px;
+  }
+
+  input {
+    border: none;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+  }
+
+  input[type="text"] {
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    padding: 4px 8px;
+  }
+}
+
+.OptionDisabled {
+  opacity: 0.5;
+}
+
+.PanelPreview {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 16px 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.PanelMockup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 0 16px;
+  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.25);
+  word-spacing: 4px;
+}
+
+.PanelElements {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.PanelApp {
+  padding: 4px 8px 8px 8px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-top: 4px solid rgba(0, 0, 0, 0.2);
+}
+
+.PanelTray {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.PanelClock {
+    display: flex;
+    flex-direction: column;
+}

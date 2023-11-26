@@ -1,0 +1,14 @@
+{
+    "KPlugin": {
+        "Authors": [],
+        "Category": "",
+        "Description": "Theme generated with Plasma Theme Generator",
+        "EnabledByDefault": true,
+        "Id": "breeze-slate",
+        "License": "LGPL",
+        "Name": "Breeze Slate",
+        "Version": "1.0.0",
+        "Website": "https://plasma.kde.org"
+    },
+    "X-Plasma-API": "5.0"
+}
