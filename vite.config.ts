@@ -1,9 +1,8 @@
-import { defineConfig } from "vite";
-import svgr from "vite-plugin-svgr";
-import react from "@vitejs/plugin-react-swc";
+import { defineConfig } from 'vite';
+import svgr from 'vite-plugin-svgr';
+import react from '@vitejs/plugin-react-swc';
+import svgzPlugin from './src/plugins/vite-plugin-svgz';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), svgr()],
-  assetsInclude: ['**/*.svgz'],
+  plugins: [react(), svgr(), svgzPlugin()],
 });
