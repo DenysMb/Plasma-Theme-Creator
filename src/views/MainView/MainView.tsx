@@ -1,19 +1,29 @@
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import { useEffect, useMemo, useState } from "react";
-import Audio from "../../assets/audio.svg?react";
-import Battery from "../../assets/battery.svg?react";
-import Network from "../../assets/network.svg?react";
-import Notification from "../../assets/notification.svg?react";
-import KDE from "../../assets/kde.svg?react";
+import Audio from "../../assets/images/audio.svg?react";
+import Battery from "../../assets/images/battery.svg?react";
+import Network from "../../assets/images/network.svg?react";
+import Notification from "../../assets/images/notification.svg?react";
+import KDE from "../../assets/images/kde.svg?react";
 import Styles from "./MainView.module.scss";
 import { COLORS, PLASMARC, METADATA, hexToRgb } from "../../shared/utils";
+import DialogsBackground from "../../assets/translucent/dialogs/background.svgz";
+import TranslucentBackground from "../../assets/translucent/widgets/background.svgz";
+import TranslucentTooltip from "../../assets/translucent/widgets/tooltip.svgz";
+import TranslucentPanelBackground from "../../assets/translucent/widgets/panel-background.svgz";
+import SolidBackground from "../../assets/solid/widgets/background.svgz";
+import SolidTooltip from "../../assets/solid/widgets/tooltip.svgz";
+import SolidPanelBackground from "../../assets/solid/widgets/panel-background.svgz";
+import SolidPanelBackgroundWithBorder from "../../assets/solid/widgets/panel-background-with-border.svgz";
 
 const MainView = () => {
   const [backgroundColor, setBackgroundColor] = useState("#272b42");
   const [textColor, setTextColor] = useState("#ffffff");
   const [accentColor, setAccentColor] = useState("#1d7b84");
   const [isColorSchemeAccentColorUsed, setIsColorSchemeAccentColorUsed] = useState(true);
+  const [translucentWidgets, setTranslucentWidgets] = useState(true);
+  const [usePanelBorder, setUsePanelBorder] = useState(false);
   const [themeName, setThemeName] = useState("Breeze Slate");
   const themeId = useMemo(() => {
     const normalizedText = themeName.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -24,18 +34,14 @@ const MainView = () => {
   }, [themeName]);
 
   useEffect(() => {
-    // Remove the '#' symbol from the beginning of the HEX color
     const hex = backgroundColor.replace("#", "");
 
-    // Convert the HEX color to RGB values
     const red = parseInt(hex.substring(0, 2), 16);
     const green = parseInt(hex.substring(2, 4), 16);
     const blue = parseInt(hex.substring(4, 6), 16);
 
-    // Calculate the relative luminance of the color
     const relativeLuminance = (red * 0.299 + green * 0.587 + blue * 0.114) / 255;
 
-    // Determine the contrast color based on the relative luminance
     const backgroundAccentColor = relativeLuminance > 0.5 ? "rgba(0, 0, 0, 0.1)" : "rgba(255, 255, 255, 0.1)";
     const borderAccentColor = relativeLuminance > 0.5 ? "rgba(0, 0, 0, 0.2)" : "rgba(255, 255, 255, 0.2)";
 
@@ -95,7 +101,21 @@ const MainView = () => {
 
     const zip = new JSZip();
 
+    const PanelBackground = usePanelBorder ? SolidPanelBackgroundWithBorder : SolidPanelBackground;
+
     const filesToDownload = [
+      { path: `${themeId}/translucent/dialogs/background.svgz`, content: DialogsBackground },
+      { path: `${themeId}/opaque/dialogs/background.svgz`, content: DialogsBackground },
+      { path: `${themeId}/solid/dialogs/background.svgz`, content: DialogsBackground },
+      { path: `${themeId}/translucent/wdigets/background.svgz`, content: TranslucentBackground },
+      { path: `${themeId}/translucent/wdigets/tooltip.svgz`, content: TranslucentTooltip },
+      { path: `${themeId}/translucent/wdigets/panel-background.svgz`, content: TranslucentPanelBackground },
+      { path: `${themeId}/opaque/wdigets/background.svgz`, content: SolidBackground },
+      { path: `${themeId}/opaque/wdigets/tooltip.svgz`, content: SolidTooltip },
+      { path: `${themeId}/opaque/wdigets/panel-background.svgz`, content: PanelBackground },
+      { path: `${themeId}/solid/wdigets/background.svgz`, content: SolidBackground },
+      { path: `${themeId}/solid/wdigets/tooltip.svgz`, content: SolidTooltip },
+      { path: `${themeId}/solid/wdigets/panel-background.svgz`, content: PanelBackground },
       { path: `${themeId}/colors`, content: newColors },
       { path: `${themeId}/plasmarc`, content: PLASMARC },
       { path: `${themeId}/metadata.json`, content: JSON.stringify(newMetadata, null, 2) },
@@ -165,6 +185,31 @@ const MainView = () => {
               onChange={(e) => setAccentColor(e.target.value)}
               value={accentColor}
               disabled={isColorSchemeAccentColorUsed}
+            />
+          </div>
+        </div>
+
+        <div className={Styles.Option}>
+          <label htmlFor="translucentWidgets">Use translucent widgets even with opaque panel:</label>
+          <div>
+            <input
+              name="translucentWidgets"
+              type="checkbox"
+              onChange={(e) => setTranslucentWidgets(e.target.checked)}
+              checked={translucentWidgets}
+            />
+          </div>
+        </div>
+
+        <div className={`${Styles.Option} ${!translucentWidgets && Styles.OptionDisabled}`}>
+          <label htmlFor="usePanelBorder">Use border for opaque panel:</label>
+          <div>
+            <input
+              name="usePanelBorder"
+              type="checkbox"
+              onChange={(e) => setUsePanelBorder(e.target.checked)}
+              checked={usePanelBorder}
+              disabled={!translucentWidgets}
             />
           </div>
         </div>
