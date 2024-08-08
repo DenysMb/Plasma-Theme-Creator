@@ -3,7 +3,7 @@ import { createFilter } from '@rollup/pluginutils';
 import fs from 'fs';
 import path from 'path';
 
-export default function svgzPlugin(options = {}): Plugin {
+export default function svgzPlugin(): Plugin {
   const filter = createFilter(/\.svgz$/);
 
   return {
