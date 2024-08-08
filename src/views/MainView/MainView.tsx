@@ -107,22 +107,22 @@ const MainView = () => {
       { path: `${themeId}/translucent/dialogs/background.svgz`, content: DialogsBackground },
       { path: `${themeId}/opaque/dialogs/background.svgz`, content: DialogsBackground },
       { path: `${themeId}/solid/dialogs/background.svgz`, content: DialogsBackground },
-      { path: `${themeId}/translucent/wdigets/background.svgz`, content: TranslucentBackground },
-      { path: `${themeId}/translucent/wdigets/tooltip.svgz`, content: TranslucentTooltip },
-      { path: `${themeId}/translucent/wdigets/panel-background.svgz`, content: TranslucentPanelBackground },
-      { path: `${themeId}/opaque/wdigets/background.svgz`, content: SolidBackground },
-      { path: `${themeId}/opaque/wdigets/tooltip.svgz`, content: SolidTooltip },
-      { path: `${themeId}/opaque/wdigets/panel-background.svgz`, content: PanelBackground },
-      { path: `${themeId}/solid/wdigets/background.svgz`, content: SolidBackground },
-      { path: `${themeId}/solid/wdigets/tooltip.svgz`, content: SolidTooltip },
-      { path: `${themeId}/solid/wdigets/panel-background.svgz`, content: PanelBackground },
+      { path: `${themeId}/translucent/widgets/background.svgz`, content: TranslucentBackground },
+      { path: `${themeId}/translucent/widgets/tooltip.svgz`, content: TranslucentTooltip },
+      { path: `${themeId}/translucent/widgets/panel-background.svgz`, content: TranslucentPanelBackground },
+      { path: `${themeId}/opaque/widgets/background.svgz`, content: SolidBackground },
+      { path: `${themeId}/opaque/widgets/tooltip.svgz`, content: SolidTooltip },
+      { path: `${themeId}/opaque/widgets/panel-background.svgz`, content: PanelBackground },
+      { path: `${themeId}/solid/widgets/background.svgz`, content: SolidBackground },
+      { path: `${themeId}/solid/widgets/tooltip.svgz`, content: SolidTooltip },
+      { path: `${themeId}/solid/widgets/panel-background.svgz`, content: PanelBackground },
       { path: `${themeId}/colors`, content: newColors },
       { path: `${themeId}/plasmarc`, content: PLASMARC },
       { path: `${themeId}/metadata.json`, content: JSON.stringify(newMetadata, null, 2) },
     ];
 
     filesToDownload.forEach((file) => {
-      zip.file(file.path, file.content);
+      zip.file(file.path, file.content, { binary: file.path.endsWith('.svgz') });
     });
 
     const zipBlob = await zip.generateAsync({ type: "blob" });
@@ -131,7 +131,13 @@ const MainView = () => {
   };
 
   const now = new Date();
-  const time = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", day: "2-digit", month: "short", year: "numeric" });
+  const time = now.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
 
   return (
     <div className={Styles.MainViewContainer}>
@@ -153,7 +159,12 @@ const MainView = () => {
         <div className={Styles.Option}>
           <label htmlFor="backgroundColor">Background Color:</label>
           <div>
-            <input name="backgroundColor" type="color" onChange={(e) => setBackgroundColor(e.target.value)} value={backgroundColor} />
+            <input
+              name="backgroundColor"
+              type="color"
+              onChange={(e) => setBackgroundColor(e.target.value)}
+              value={backgroundColor}
+            />
           </div>
         </div>
 

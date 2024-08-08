@@ -142,7 +142,7 @@ export const METADATA = {
     License: "LGPL",
     Name: "Breeze Slate",
     Version: "1.0.0",
-    Website: "https://plasma.kde.org",
+    Website: "https://github.com/DenysMb/Plasma-Theme-Creator",
   },
   "X-Plasma-API": "5.0",
 };
